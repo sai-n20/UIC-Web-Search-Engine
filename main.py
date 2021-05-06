@@ -105,3 +105,68 @@ while searcher or morePages.lower() in {'y', 'yes'}:
     correlateTitleURL(toFetch)
     morePages = str(input("\nFetch more pages?"))
     toFetch += 10
+
+
+
+#Code for manually creating TF-IDF dict and vectorizing corpus+query. 
+#Decided to use sklearn implementation for conciseness and speed upon query by user.
+
+# #Word freq dict and subsequent list
+# tokenFreq = {}
+# for page in cleanWebData:
+#     for word in page.split():
+#         if(word in tokenFreq):
+#             tokenFreq[word] += 1
+#         else:
+#             tokenFreq[word] = 1
+# vocab = [term for term in tokenFreq]
+
+# #Create tfIDF dict of tuples
+# tfIDF = {}
+# for number, doc in enumerate(cleanWebData):
+#     docTokens = doc.split()
+#     wordCounts = Counter(docTokens)
+#     totalWords = len(docTokens)
+#     for word in np.unique(docTokens):
+#         tf = wordCounts[word]/totalWords
+#         df = tokenFreq[word]
+#         idf = np.log((len(docCorpus))/df)
+
+#         tfIDF[number, word] = tf*idf
+
+# #Document vector from tfIDF
+# docVector = np.zeros((len(cleanWebData), len(vocab)))
+# for item in tfIDF:
+#     index = vocab.index(item[1])
+#     docVector[item[0]][index] = tfIDF[item]
+
+# #Vectorize query in the same shape as document vector
+# def vectorizeQuery(data):
+#     vecQ = np.zeros((len(vocab)))
+#     wordCounts = Counter(data)
+#     totalWords = len(data)
+    
+#     for token in np.unique(data):
+#         tf = wordCounts[token]/totalWords
+#         df = tokenFreq[token] if token in vocab else 0
+#         idf = np.log((len(cleanWebData)+1)/(df+1))
+#         try:
+#             ind = vocab.index(token)
+#             vecQ[ind] = tf*idf
+#         except:
+#             pass
+#     return vecQ
+
+# #Calculate cosine similarity and arrange docs in descending order
+# def cosineSimilarity(query, k):
+#     tokens = query.split()
+#     cosines = []
+#     queryVector = vectorizeQuery(tokens)
+#     for item in docVector:
+#         cosines.append(np.dot(queryVector, item)/(np.linalg.norm(queryVector)*np.linalg.norm(item)))
+#     if k > 0:
+#         # top k docs in descending order    
+#         return np.array(cosines).argsort()[-k:][::-1]
+#     else:
+#         # consider all docs
+#         return np.array(cosines).argsort()[::-1]
