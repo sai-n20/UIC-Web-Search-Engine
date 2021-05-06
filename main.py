@@ -109,7 +109,7 @@ while searcher or morePages.lower() in {'y', 'yes'}:
 
 
 #Code for manually creating TF-IDF dict and vectorizing corpus+query. 
-#Decided to use sklearn implementation for conciseness and speed upon query by user.
+#Decided to use sklearn implementation instead for conciseness and speed upon query by user.
 
 # #Word freq dict and subsequent list
 # tokenFreq = {}
